@@ -4,11 +4,6 @@ Create 6 IAM Users:
 1. Alice  2. Bob  3. Charles 4. David 5. Edward 6. Fred
 
 SOLUTION:-
-root@DESKTOP-8OOG2HF:~# aws configure
-AWS Access Key ID [****************UFKJ]: AKIAUSFN7KTTQXGET2R3
-AWS Secret Access Key [****************aikb]: 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
-Default region name [ap-south-1]:
-Default output format [json]:
 
 root@DESKTOP-8OOG2HF:~# aws iam create-user  --user-name Alice
 {
@@ -274,11 +269,6 @@ root@DESKTOP-8OOG2HF:~# aws iam  list-attached-user-policies --user-name Fred
 Log into the AWS account as an IAM user, 
 and list IAM user actions in terminal
 SOLUTION:-
-root@DESKTOP-8OOG2HF:~# aws configure
-AWS Access Key ID [****************NHN4]: AKIAUSFN7KTT6F7SBTFO
-AWS Secret Access Key [****************wSER]: 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
-Default region name [ap-south-1]:
-Default output format [json]:
 
 root@DESKTOP-8OOG2HF:~# aws iam list-users
 {
