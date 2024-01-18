@@ -1,0 +1,571 @@
+                                                     AWS ASSIGNMENT :-02													
+        
+================================================================================================================================================================
+8. Clone the lancachenet/ubuntu-nginx Git repository locally and build a Docker image from the provided Dockerfile. 
+   Be sure to add relevant tags when building the image.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# mkdir Docker
+root@DESKTOP-8OOG2HF:~# cd Docker/
+root@DESKTOP-8OOG2HF:Docker# git clone git@github.com:lancachenet/ubuntu-nginx.git
+Cloning into 'ubuntu-nginx'...
+remote: Enumerating objects: 101, done.
+remote: Counting objects: 100% (28/28), done.
+remote: Compressing objects: 100% (21/21), done.
+remote: Total 101 (delta 3), reused 18 (delta 0), pack-reused 73
+Receiving objects: 100% (101/101), 19.15 KiB | 3.83 MiB/s, done.
+Resolving deltas: 100% (20/20), done.
+root@DESKTOP-8OOG2HF:Docker# ll
+total 16
+drwxr-xr-x  4 root root 4096 Jan 12 14:07 ./
+drwx------ 30 root root 4096 Jan 12 14:07 ../
+drwxr-xr-x  7 root root 4096 Jan 12 14:07 .git/
+drwxr-xr-x  5 root root 4096 Jan 12 14:07 ubuntu-nginx/
+root@DESKTOP-8OOG2HF:Docker# cd ubuntu-nginx/
+root@DESKTOP-8OOG2HF:ubuntu-nginx# ll
+total 44
+drwxr-xr-x 5 root root 4096 Jan 12 14:07 ./
+drwxr-xr-x 4 root root 4096 Jan 12 14:07 ../
+drwxr-xr-x 2 root root 4096 Jan 12 14:07 .circleci/
+drwxr-xr-x 8 root root 4096 Jan 12 14:07 .git/
+-rw-r--r-- 1 root root    6 Jan 12 14:07 .gitignore
+-rw-r--r-- 1 root root  979 Jan 12 14:07 Dockerfile
+-rw-r--r-- 1 root root  789 Jan 12 14:07 README.md
+-rw-r--r-- 1 root root  292 Jan 12 14:07 goss.yaml
+-rw-r--r-- 1 root root  105 Jan 12 14:07 goss_wait.yaml
+drwxr-xr-x 6 root root 4096 Jan 12 14:07 overlay/
+-rwxr-xr-x 1 root root 1047 Jan 12 14:07 run-tests.sh*
+root@DESKTOP-8OOG2HF:ubuntu-nginx# cat Dockerfile
+FROM lancachenet/ubuntu:latest
+MAINTAINER LanCache.Net Team <team@lancache.net>
+ARG DEBIAN_FRONTEND=noninteractive
+COPY overlay/ /
+RUN apt-get update && apt-get install -y nginx-full inotify-tools
+RUN \
+    chmod 777 /opt/nginx/startnginx.sh && \
+    rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+        mkdir -p /etc/nginx/sites-enabled/ && \
+        mkdir -p /etc/nginx/stream-enabled/ && \
+        for SITE in /etc/nginx/sites-available/*; do [ -e "$SITE" ] || continue; ln -s $SITE /etc/nginx/sites-enabled/`basename $SITE`; done && \
+        for SITE in /etc/nginx/stream-available/*; do [ -e "$SITE" ] || continue; ln -s $SITE /etc/nginx/stream-enabled/`basename $SITE`; done && \
+    mkdir -p /var/www/html && \
+    chmod 777 /var/www/html /var/lib/nginx && \
+    chmod -R 777 /var/log/nginx && \
+    chmod -R 755 /hooks /init && \
+    chmod 755 /var/www && \
+    chmod -R 666 /etc/nginx/sites-* /etc/nginx/conf.d/* /etc/nginx/stream.d/* /etc/nginx/stream-*
+
+EXPOSE 80
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker image ls
+REPOSITORY            TAG       IMAGE ID       CREATED        SIZE
+asfiyask/local_repo   latest    f324c2bb1257   20 hours ago   584MB
+asfiyask/my_repo      v1        f324c2bb1257   20 hours ago   584MB
+ubuntu                latest    174c8c134b2a   4 weeks ago    77.9MB
+httpd                 latest    6fd77d7e5eb7   2 months ago   167MB
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker image build -t cloudethix/v1
+ERROR: "docker buildx build" requires exactly 1 argument.
+See 'docker buildx build --help'.
+
+Usage:  docker buildx build [OPTIONS] PATH | URL | -
+
+Start a build
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker image build -t cloud:v1 .
+[+] Building 12.6s (9/9) FINISHED                                                                                     docker:default
+ => [internal] load build definition from Dockerfile                                                                            0.0s
+ => => transferring dockerfile: 1.02kB                                                                                          0.0s
+ => [internal] load .dockerignore                                                                                               0.0s
+ => => transferring context: 2B                                                                                                 0.0s
+ => [internal] load metadata for docker.io/lancachenet/ubuntu:latest                                                           12.4s
+ => [internal] load build context                                                                                               0.0s
+ => => transferring context: 1.36kB                                                                                             0.0s
+ => [1/4] FROM docker.io/lancachenet/ubuntu:latest@sha256:7ece2e2aefb4cc13b895823fa7c1ee43763a1b15b84659dcb4daae726f757765      0.0s
+ => CACHED [2/4] COPY overlay/ /                                                                                                0.0s
+ => CACHED [3/4] RUN apt-get update && apt-get install -y nginx-full inotify-tools                                              0.0s
+ => CACHED [4/4] RUN     chmod 777 /opt/nginx/startnginx.sh &&     rm /etc/nginx/sites-available/default /etc/nginx/sites-enab  0.0s
+ => exporting to image                                                                                                          0.0s
+ => => exporting layers                                                                                                         0.0s
+ => => writing image sha256:f324c2bb1257fd8b591aa0013b3bc79a284859de5a2a6d754651fbfe153de317                                    0.0s
+ => => naming to docker.io/library/cloud:v1                                                                                     0.0s
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker image ls
+REPOSITORY            TAG       IMAGE ID       CREATED        SIZE
+cloud                 v1        f324c2bb1257   20 hours ago   584MB
+
+================================================================================================================================================================
+9. After building the image, run a Docker container using the image and check the webpage using the curl command to
+   ensure it's accessible.
+================================================================================================================================================================
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker run -it -d -p 8080:80 --name my_nginx_container cloud:v1
+5cf7afc7c22a06ab9bc34337227ac6e20e5a85e68e997ce88a5b822cbb5d441c
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container ls
+CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS              PORTS                                   NAMES
+5cf7afc7c22a   cloud:v1   "/bin/bash -e /init/…"   About a minute ago   Up About a minute   0.0.0.0:8080->80/tcp, :::8080->80/tcp   my_nginx_container
+
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker inspect 5cf7afc7c22a
+ "IPAddress": "172.17.0.6",
+root@DESKTOP-8OOG2HF:ubuntu-nginx# curl 172.17.0.6
+Welcome to the lancachenet/ubuntu-nginx docker container
+root@DESKTOP-8OOG2HF:ubuntu-nginx# curl 172.17.0.6 8080
+Welcome to the lancachenet/ubuntu-nginx docker container
+================================================================================================================================================================
+11. Launch an Ubuntu container, demonstrate that the escape sequence is functional, and reattach the container 
+    after detaching it with the escape sequence. Then, check the container's IP address.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:ubuntu-nginx#  docker container run -it ubuntu
+root@aec53c59326b:/# exit
+exit
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                        PORTS                                   NAMES
+e46b33db2583   ubuntu     "/bin/bash"              54 seconds ago   Exited (127) 23 seconds ago                                   suspicious_curran
+
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container start e46b33db2583
+e46b33db2583
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container ls -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS                     PORTS                                   NAMES
+e46b33db2583   ubuntu     "/bin/bash"              About a minute ago   Up 1 second                                                        suspicious_curran
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker inspect e46b33db2583 | grep IPAddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.7",
+                    "IPAddress": "172.17.0.7",
+===============================================================================================================================================================
+12. Use a Docker command to inspect the hostname and /etc/hosts file of the httpd container.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container ls -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                      PORTS                                   NAMES
+e46b33db2583   ubuntu     "/bin/bash"              10 minutes ago   Up 6 minutes                                                        suspicious_curran
+
+root@DESKTOP-8OOG2HF:ubuntu-nginx#  docker container exec  e46b33db2583 hostname
+e46b33db2583
+root@DESKTOP-8OOG2HF:ubuntu-nginx#  docker container exec   e46b33db2583  cat /etc/hosts
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.17.0.7      e46b33db2583
+================================================================================================================================================================
+13. Run a Docker command to inspect a container created with the lancachenet/ubuntu-nginx repository, and monitor the container's resource usage and stats with 
+    the TOP command.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker inspect e46b33db2583
+[
+    {
+        "Id": "e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a",
+        "Created": "2024-01-12T09:18:49.413959241Z",
+        "Path": "/bin/bash",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 163336,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2024-01-12T09:22:47.67021311Z",
+            "FinishedAt": "2024-01-12T09:21:33.139658113Z"
+        },
+        "Image": "sha256:174c8c134b2a94b5bb0b37d9a2b6ba0663d82d23ebf62bd51f74a2fd457333da",
+        "ResolvConfPath": "/var/lib/docker/containers/e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a/hostname",
+        "HostsPath": "/var/lib/docker/containers/e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a/hosts",
+        "LogPath": "/var/lib/docker/containers/e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a/e46b33db2583108cffedb999a8993e235f4c7511199b1f1d940a12947880012a-json.log",
+        "Name": "/suspicious_curran",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                40,
+                166
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/a4a6f3deef932b2392071898bf0ae68a8e801635cbc1dfb76652fef95bce0b51-init/diff:/var/lib/docker/overlay2/773e5148f81be1a5e2032496f1e3bb2a341bb52b89f560f38f84dd078796f085/diff",
+                "MergedDir": "/var/lib/docker/overlay2/a4a6f3deef932b2392071898bf0ae68a8e801635cbc1dfb76652fef95bce0b51/merged",
+                "UpperDir": "/var/lib/docker/overlay2/a4a6f3deef932b2392071898bf0ae68a8e801635cbc1dfb76652fef95bce0b51/diff",
+                "WorkDir": "/var/lib/docker/overlay2/a4a6f3deef932b2392071898bf0ae68a8e801635cbc1dfb76652fef95bce0b51/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "e46b33db2583",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubuntu",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "7fa9ea05158935588e78534850c40b65d4973f09d1b2121292eda073c746265a",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/7fa9ea051589",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "76769a63822a33a05f6564ad1089c8e73221c2db72a5df1fb65c87f6ee6f716c",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.7",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:07",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "57d1e73c8b59eeb26c61296c8798af28b361f5e133c02bcea1fcd213f5165fdd",
+                    "EndpointID": "76769a63822a33a05f6564ad1089c8e73221c2db72a5df1fb65c87f6ee6f716c",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.7",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:07",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container top e46b33db2583
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                163336              163315              0                   14:52               pts/0               00:00:00            /bin/bash
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container stats e46b33db2583
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT   MEM %     NET I/O       BLOCK I/O   PIDS
+e46b33db2583   suspicious_curran   0.00%     860KiB / 3.782GiB   0.02%     1.15kB / 0B   0B / 0B     1
+
+================================================================================================================================================================
+14. Start a new Nginx container and review the logs for both Nginx containers.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container run -itd cloud:v1
+0df9ae5ec1fb2697cd1a5ce1c333eddf3492ce58a8d5c1cd74a55a7d1820ea55
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container ls -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                    PORTS                                   NAMES
+0df9ae5ec1fb   cloud:v1   "/bin/bash -e /init/…"   40 seconds ago   Up 39 seconds             80/tcp                                  flamboyant_chaplygin
+e46b33db2583   ubuntu     "/bin/bash"              2 hours ago      Up 2 hours                                                        suspicious_curran
+aec53c59326b   ubuntu     "/bin/bash"              2 hours ago      Exited (0) 2 hours ago                                            vibrant_margulis
+5cf7afc7c22a   cloud:v1   "/bin/bash -e /init/…"   2 hours ago      Up 2 hours                0.0.0.0:8080->80/tcp, :::8080->80/tcp   my_nginx_container
+f9af3030d325   httpd      "sleep 10"               26 hours ago     Up 1 second               80/tcp                                  monitoring_tool
+1c95fcb74609   httpd      "sleep 10"               26 hours ago     Up 1 second               80/tcp                                  database_service
+adb747f02337   httpd      "httpd-foreground"       26 hours ago     Up 5 hours                80/tcp                                  api_server
+ededc31db846   httpd      "httpd-foreground"       27 hours ago     Up 5 hours                80/tcp                                  web_app_frontend
+aa574aa792ae   ubuntu     "/bin/bash"              3 days ago       Exited (255) 2 days ago                                           affectionate_heisenberg
+dbed4b3112e2   ubuntu     "/bin/bash"              3 days ago       Exited (0) 3 days ago                                             interesting_lamarr
+1ea5684054e3   ubuntu     "/bin/bash"              3 days ago       Exited (0) 3 days ago                                             frosty_golick
+24f3ab092292   ubuntu     "/bin/bash"              3 days ago       Exited (127) 3 days ago                                           trusting_clarke
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container logs 0df9ae5ec1fb
+Executing hook /hooks/entrypoint-pre.d/00_asciilogo.sh
+  _                  _____           _                       _
+ | |                / ____|         | |                     | |
+ | |     __ _ _ __ | |     __ _  ___| |__   ___   _ __   ___| |_
+ | |    / _` | '_ \| |    / _` |/ __| '_ \ / _ \ | '_ \ / _ \ __|
+ | |___| (_| | | | | |___| (_| | (__| | | |  __/_| | | |  __/ |_
+ |______\__,_|_| |_|\_____\__,_|\___|_| |_|\___(_)_| |_|\___|\__|
+
+
+Executing hook /hooks/supervisord-pre.d/20_test_files_setup
+Checking if /var/www/ is empty - Directory not empty.. don't touch content
+Executing hook /hooks/supervisord-pre.d/21_cleanup_log_files
+Cleaning up log files older than 7 days
+Starting Supervisord
+root@DESKTOP-8OOG2HF:ubuntu-nginx# docker container logs 5cf7afc7c22a
+Executing hook /hooks/entrypoint-pre.d/00_asciilogo.sh
+  _                  _____           _                       _
+ | |                / ____|         | |                     | |
+ | |     __ _ _ __ | |     __ _  ___| |__   ___   _ __   ___| |_
+ | |    / _` | '_ \| |    / _` |/ __| '_ \ / _ \ | '_ \ / _ \ __|
+ | |___| (_| | | | | |___| (_| | (__| | | |  __/_| | | |  __/ |_
+ |______\__,_|_| |_|\_____\__,_|\___|_| |_|\___(_)_| |_|\___|\__|
+
+
+Executing hook /hooks/supervisord-pre.d/20_test_files_setup
+Checking if /var/www/ is empty - Directory not empty.. don't touch content
+Executing hook /hooks/supervisord-pre.d/21_cleanup_log_files
+Cleaning up log files older than 7 days
+Starting Supervisord
+
+================================================================================================================================================================
+15. Examine system events, filtering them by date and the last 30 minutes. Additionally, apply two filters simultaneously using name and event.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# docker system events --since '2024-01-10T00:30' --filter container=f9af3030d325 | head -n 10
+2024-01-15T12:03:38.189989095+05:30 container die f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (execDuration=10, exitCode=0, image=httpd, name=monitoring_tool)
+2024-01-15T12:03:39.065542777+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+2024-01-15T12:03:49.662544279+05:30 container die f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (execDuration=10, exitCode=0, image=httpd, name=monitoring_tool)
+2024-01-15T12:03:50.425509367+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+2024-01-15T12:04:01.073875423+05:30 container die f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (execDuration=10, exitCode=0, image=httpd, name=monitoring_tool)
+2024-01-15T12:04:01.871185712+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+2024-01-15T12:04:12.390846012+05:30 container die f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (execDuration=10, exitCode=0, image=httpd, name=monitoring_tool)
+2024-01-15T12:04:13.062038306+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+2024-01-15T12:04:23.518245818+05:30 container die f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (execDuration=10, exitCode=0, image=httpd, name=monitoring_tool)
+2024-01-15T12:04:24.431627411+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+
+================================================================================================================================================================
+16. Create a Docker container using the Ubuntu image, assign it a meaningful name, and set the hostname to "cloudethix.com." Stop or kill the container, 
+    check its exit code, and examine the container's log for more information.
+================================================================================================================================================================
+ANS}	
+root@DESKTOP-8OOG2HF:~# docker image ls -a
+REPOSITORY            TAG       IMAGE ID       CREATED        SIZE
+ubuntu                latest    174c8c134b2a   4 weeks ago    77.9MB
+
+root@DESKTOP-8OOG2HF:~# docker container run -itd --name cloudethix-ubuntu-container --hostname cloudethix.com ubuntu
+d71c04956dd620dcba2f62579f3332442e8d40605d05b7ab6a476b2348f6eb22
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS                                  PORTS     NAMES
+d71c04956dd6   ubuntu    "/bin/bash"          16 seconds ago   Up 15 seconds                                     cloudethix-ubuntu-container
+f9af3030d325   httpd     "sleep 10"           5 days ago       Restarting (0) Less than a second ago             monitoring_tool
+1c95fcb74609   httpd     "sleep 10"           5 days ago       Restarting (0) Less than a second ago             database_service
+adb747f02337   httpd     "httpd-foreground"   5 days ago       Up 5 hours                              80/tcp    api_server
+ededc31db846   httpd     "httpd-foreground"   5 days ago       Up 5 hours                              80/tcp    web_app_frontend
+
+root@DESKTOP-8OOG2HF:~# docker exec d71c04956dd6 hostname
+cloudethix.com
+
+root@DESKTOP-8OOG2HF:~# docker container stop  cloudethix-ubuntu-container
+cloudethix-ubuntu-container
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND              CREATED      STATUS         PORTS     NAMES
+f9af3030d325   httpd     "sleep 10"           5 days ago   Up 9 seconds   80/tcp    monitoring_tool
+1c95fcb74609   httpd     "sleep 10"           5 days ago   Up 9 seconds   80/tcp    database_service
+adb747f02337   httpd     "httpd-foreground"   5 days ago   Up 5 hours     80/tcp    api_server
+ededc31db846   httpd     "httpd-foreground"   5 days ago   Up 5 hours     80/tcp    web_app_frontend
+
+root@DESKTOP-8OOG2HF:~# docker container logs cloudethix-ubuntu-container
+root@cloudethix:/# root@DESKTOP-8OOG2HF:~#
+
+================================================================================================================================================================
+17. Instantiate and start an Ubuntu container with a random name, then rename it to "Ubuntu01." Launch another container named "Ubuntu02" and check the 
+    hostname of both containers. Pause and un-pause the "Ubuntu02" container, and stop, start, and restart the "Ubuntu01" container. Inspect the stats
+ 	and system events of both containers, then kill and delete them, ensuring that directories created by the containers are removed.
+================================================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# docker container run -itd ubuntu
+aa30bce88c4af591e0f87e854b0c41e34f7bbbcfc0716ae5f5a9a9efc8491d71
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND              CREATED         STATUS          PORTS     NAMES
+aa30bce88c4a   ubuntu    "/bin/bash"          5 seconds ago   Up 4 seconds              agitated_satoshi
+root@DESKTOP-8OOG2HF:~# docker container rename aa30bce88c4a  ubuntu01
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND              CREATED              STATUS              PORTS     NAMES
+aa30bce88c4a   ubuntu    "/bin/bash"          About a minute ago   Up About a minute             ubuntu01
+root@DESKTOP-8OOG2HF:~# docker container run -itd --name ubuntu02 ubuntu:latest
+913c58796a19ee4230ac4bf5215453013dcc4f64c71439abb2370dd1bc9a27da
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE           COMMAND              CREATED          STATUS              PORTS     NAMES
+913c58796a19   ubuntu:latest   "/bin/bash"          8 seconds ago    Up 6 seconds                  ubuntu02
+
+root@DESKTOP-8OOG2HF:~# docker container exec  ubuntu01 hostname
+aa30bce88c4a
+root@DESKTOP-8OOG2HF:~# docker container exec  ubuntu02 hostname
+913c58796a19
+root@DESKTOP-8OOG2HF:~# docker container pause ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE           COMMAND              CREATED              STATUS                       PORTS     NAMES
+913c58796a19   ubuntu:latest   "/bin/bash"          About a minute ago   Up About a minute (Paused)             ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container unpause ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE           COMMAND              CREATED              STATUS              PORTS     NAMES
+913c58796a19   ubuntu:latest   "/bin/bash"          About a minute ago   Up About a minute             ubuntu02
+
+root@DESKTOP-8OOG2HF:~# docker container stop  ubuntu01
+ubuntu01
+root@DESKTOP-8OOG2HF:~# docker container ls -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                        PORTS                                   NAMES
+aa30bce88c4a   ubuntu          "/bin/bash"              9 minutes ago    Exited (137) 10 seconds ago                                           ubuntu01
+
+root@DESKTOP-8OOG2HF:~# docker container start  ubuntu01
+ubuntu01
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE           COMMAND              CREATED          STATUS         PORTS     NAMES
+aa30bce88c4a   ubuntu          "/bin/bash"          9 minutes ago    Up 3 seconds             ubuntu01
+
+root@DESKTOP-8OOG2HF:~# docker stats ubuntu01
+CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLOCK I/O   PIDS
+aa30bce88c4a   ubuntu01   0.00%     796KiB / 3.782GiB   0.02%     656B / 0B   0B / 0B     1
+
+root@DESKTOP-8OOG2HF:~# docker stats ubuntu02
+CONTAINER ID   NAME       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     BLOCK I/O   PIDS
+913c58796a19   ubuntu02   0.00%     836KiB / 3.782GiB   0.02%     866B / 0B   0B / 0B     1
+
+root@DESKTOP-8OOG2HF:~# docker events --since 10m
+2024-01-16T16:36:00.267492197+05:30 network connect f65cf49050184e1fffe35f18c03a965e3388f454cab61066711fdeeac050df7b (container=f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b, name=bridge, type=bridge)
+2024-01-16T16:36:00.320887697+05:30 network connect f65cf49050184e1fffe35f18c03a965e3388f454cab61066711fdeeac050df7b (container=1c95fcb746096c981d30237d24f33ddab99914c7e1a9a341a3c6d5c3025be1af, name=bridge, type=bridge)
+2024-01-16T16:36:00.586199396+05:30 container start f9af3030d325030703e9c73e5b14e10423dcc53087349175768eebcb429ebe8b (image=httpd, name=monitoring_tool)
+
+root@DESKTOP-8OOG2HF:~# docker container kill ubuntu01
+ubuntu01
+root@DESKTOP-8OOG2HF:~# docker container ls -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                       PORTS                                   NAMES
+aa30bce88c4a   ubuntu          "/bin/bash"              11 minutes ago   Exited (137) 9 seconds ago                                           ubuntu01
+
+root@DESKTOP-8OOG2HF:~# docker container rm ubuntu01
+ubuntu01
+
+root@DESKTOP-8OOG2HF:~# docker container ls -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                      PORTS                                   NAMES
+
+root@DESKTOP-8OOG2HF:~# docker container kill ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container ls -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                       PORTS                                   NAMES
+913c58796a19   ubuntu:latest   "/bin/bash"              5 minutes ago    Exited (137) 2 seconds ago                                           ubuntu02
+
+root@DESKTOP-8OOG2HF:~# docker container restart ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE           COMMAND              CREATED          STATUS         PORTS     NAMES
+913c58796a19   ubuntu:latest   "/bin/bash"          6 minutes ago    Up 2 seconds             ubuntu02-                                                                                                                                                                                    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+root@DESKTOP-8OOG2HF:~# docker container stop ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container rm ubuntu02
+ubuntu02
+root@DESKTOP-8OOG2HF:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS         PORTS     NAMES
+
+================================================================================================================================================================
+18. Create a DockerHub account, set up a repository with meaningful name.
+================================================================================================================================================================
+ANS}
+asfiyask/docker_hub
+
+Description
+Docker_hub
+Created: 2 minutes ago
+ 
+
