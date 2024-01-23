@@ -1,0 +1,691 @@
+                                           GIT_ASSIGNMENT NO :- 3
+==================================================================================================================================
+1. Fork below public repository to your account. Then clone the repository locally. Create 2 branches cloud_dev01. 
+   Then add cloud_dev02 to that repository locally and hello.txt , moto.txt and world.txt to one branch and add  another 
+   3 files to another branch. Then push cloud_dev02 branch to the Forked repository on the remote. 
+===================================================================================================================================
+    https://github.com/ripienaar/free-for-dev
+ANS}
+root@DESKTOP-8OOG2HF:BaseProject# cd
+root@DESKTOP-8OOG2HF:~# mkdir data
+root@DESKTOP-8OOG2HF:~# cd data/
+root@DESKTOP-8OOG2HF:data# ll
+total 8
+drwxr-xr-x  2 root root 4096 Jan  5 17:55 ./
+drwx------ 12 root root 4096 Jan  5 17:55 ../
+root@DESKTOP-8OOG2HF:data# git init
+Initialized empty Git repository in /root/data/.git/
+root@DESKTOP-8OOG2HF:data# ll
+total 12
+drwxr-xr-x  3 root root 4096 Jan  5 17:57 ./
+drwx------ 12 root root 4096 Jan  5 17:56 ../
+drwxr-xr-x  7 root root 4096 Jan  5 17:57 .git/
+
+root@DESKTOP-8OOG2HF:data# git clone git@github.com:ASFIASHAIKH/PUBLIC_PROJECT.git
+Cloning into 'PUBLIC_PROJECT'...
+remote: Enumerating objects: 13022, done.
+remote: Counting objects: 100% (80/80), done.
+remote: Compressing objects: 100% (51/51), done.
+remote: Total 13022 (delta 42), reused 60 (delta 29), pack-reused 12942
+Receiving objects: 100% (13022/13022), 7.08 MiB | 3.36 MiB/s, done.
+Resolving deltas: 100% (6761/6761), done.
+
+root@DESKTOP-8OOG2HF:data# git branch -a
+root@DESKTOP-8OOG2HF:data# ll
+total 16
+drwxr-xr-x  4 root root 4096 Jan  5 17:59 ./
+drwx------ 12 root root 4096 Jan  5 18:00 ../
+drwxr-xr-x  7 root root 4096 Jan  5 17:57 .git/
+drwxr-xr-x  4 root root 4096 Jan  5 17:59 PUBLIC_PROJECT/
+
+root@DESKTOP-8OOG2HF:data# cd PUBLIC_PROJECT/
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# ll
+total 288
+drwxr-xr-x 4 root root   4096 Jan  5 17:59 ./
+drwxr-xr-x 4 root root   4096 Jan  5 17:59 ../
+drwxr-xr-x 8 root root   4096 Jan  5 17:59 .git/
+drwxr-xr-x 2 root root   4096 Jan  5 17:59 .github/
+-rw-r--r-- 1 root root     12 Jan  5 17:59 CNAME
+-rw-r--r-- 1 root root 265115 Jan  5 17:59 README.md
+-rw-r--r-- 1 root root   3556 Jan  5 17:59 index.html
+-rw-r--r-- 1 root root    768 Jan  5 17:59 logo.webp
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout -b cloud_dev01
+Switched to a new branch 'cloud_dev01'
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+* cloud_dev01
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+  cloud_dev01
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout -b cloud_dev02
+Switched to a new branch 'cloud_dev02'
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+  cloud_dev01
+* cloud_dev02
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout cloud_dev01
+Switched to branch 'cloud_dev01'
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# touch hello.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# touch moto.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# touch world.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# ll
+total 288
+drwxr-xr-x 4 root root   4096 Jan  5 18:05 ./
+drwxr-xr-x 4 root root   4096 Jan  5 17:59 ../
+drwxr-xr-x 8 root root   4096 Jan  5 18:04 .git/
+drwxr-xr-x 2 root root   4096 Jan  5 17:59 .github/
+-rw-r--r-- 1 root root     12 Jan  5 17:59 CNAME
+-rw-r--r-- 1 root root 265115 Jan  5 17:59 README.md
+-rw-r--r-- 1 root root      0 Jan  5 18:05 hello.txt
+-rw-r--r-- 1 root root   3556 Jan  5 17:59 index.html
+-rw-r--r-- 1 root root    768 Jan  5 17:59 logo.webp
+-rw-r--r-- 1 root root      0 Jan  5 18:05 moto.txt
+-rw-r--r-- 1 root root      0 Jan  5 18:05 world.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+* cloud_dev01
+  cloud_dev02
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout cloud_dev02
+Switched to branch 'cloud_dev02'
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+  cloud_dev01
+* cloud_dev02
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# touch files{1..3}.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# ll
+total 288
+drwxr-xr-x 4 root root   4096 Jan  5 18:07 ./
+drwxr-xr-x 4 root root   4096 Jan  5 17:59 ../
+drwxr-xr-x 8 root root   4096 Jan  5 18:05 .git/
+drwxr-xr-x 2 root root   4096 Jan  5 17:59 .github/
+-rw-r--r-- 1 root root     12 Jan  5 17:59 CNAME
+-rw-r--r-- 1 root root 265115 Jan  5 17:59 README.md
+-rw-r--r-- 1 root root      0 Jan  5 18:07 files1.txt
+-rw-r--r-- 1 root root      0 Jan  5 18:07 files2.txt
+-rw-r--r-- 1 root root      0 Jan  5 18:07 files3.txt
+-rw-r--r-- 1 root root      0 Jan  5 18:05 hello.txt
+-rw-r--r-- 1 root root   3556 Jan  5 17:59 index.html
+-rw-r--r-- 1 root root    768 Jan  5 17:59 logo.webp
+-rw-r--r-- 1 root root      0 Jan  5 18:05 moto.txt
+-rw-r--r-- 1 root root      0 Jan  5 18:05 world.txt
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git add .
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git status
+On branch cloud_dev02
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   files1.txt
+        new file:   files2.txt
+        new file:   files3.txt
+        new file:   hello.txt
+        new file:   moto.txt
+        new file:   world.txt
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git commit -m "Adding a files"
+[cloud_dev02 5f4aadb] Adding a files
+ 6 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 files1.txt
+ create mode 100644 files2.txt
+ create mode 100644 files3.txt
+ create mode 100644 hello.txt
+ create mode 100644 moto.txt
+ create mode 100644 world.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git status
+On branch cloud_dev02
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git push origin cloud_dev02
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 431 bytes | 215.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:ASFIASHAIKH/PUBLIC_PROJECT.git
+   6a6e084..5f4aadb  cloud_dev02 -> cloud_dev02
+===================================================================================================================================
+2. Create a remote repository merge_confilct_demo. Add some files in the remote master branch. Clone the repository locally. 
+   Create 2 branches locally named demo/merge and demo/conflicts. Add a merge.txt file in both branches  with some data like 
+   "Hello CloudEthiX…." And "Fello CloudEthiX…." respectively and commit. Then merge demo/conflicts branch to demo/merge branch 
+    and solve the merge conflicts.
+===================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# mkdir questions_02
+root@DESKTOP-8OOG2HF:~# cd questions_02/
+root@DESKTOP-8OOG2HF:questions_02# git init
+Initialized empty Git repository in /root/questions_02/.git/
+root@DESKTOP-8OOG2HF:questions_02# ll
+total 12
+drwxr-xr-x  3 root root 4096 Jan  8 18:53 ./
+drwx------ 16 root root 4096 Jan  8 18:53 ../
+drwxr-xr-x  7 root root 4096 Jan  8 18:53 .git/
+root@DESKTOP-8OOG2HF:questions_02# git clone git@github.com:ASFIASHAIKH/merge_confilct_demo.git
+Cloning into 'merge_confilct_demo'...
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 9 (delta 1), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (9/9), done.
+Resolving deltas: 100% (1/1), done.
+root@DESKTOP-8OOG2HF:questions_02# ll
+total 16
+drwxr-xr-x  4 root root 4096 Jan  8 19:04 ./
+drwx------ 16 root root 4096 Jan  8 19:03 ../
+drwxr-xr-x  7 root root 4096 Jan  8 18:53 .git/
+drwxr-xr-x  3 root root 4096 Jan  8 19:04 merge_confilct_demo/
+root@DESKTOP-8OOG2HF:questions_02# cd merge_confilct_demo/
+root@DESKTOP-8OOG2HF:merge_confilct_demo# ll
+total 24
+drwxr-xr-x 3 root root 4096 Jan  8 19:04 ./
+drwxr-xr-x 4 root root 4096 Jan  8 19:04 ../
+drwxr-xr-x 8 root root 4096 Jan  8 19:04 .git/
+-rw-r--r-- 1 root root   42 Jan  8 19:04 README.md
+-rw-r--r-- 1 root root   11 Jan  8 19:04 data_01.txt
+-rw-r--r-- 1 root root    1 Jan  8 19:04 data_02.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git branch
+* main
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git checkout -b demo/merge
+Switched to a new branch 'demo/merge'
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git branch
+* demo/merge
+  main
+root@DESKTOP-8OOG2HF:merge_confilct_demo# vim merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# cat merge.txt
+Hello CloudEthiX….
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git add merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git status
+On branch demo/merge
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git commit -m "Add greeting in merge.txt on demo/merge branch"
+[demo/merge ab4e2c8] Add greeting in merge.txt on demo/merge branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git status
+On branch demo/merge
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git checkout -b demo/conflicts
+Switched to a new branch 'demo/conflicts'
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git branch
+* demo/conflicts
+  demo/merge
+  main
+root@DESKTOP-8OOG2HF:merge_confilct_demo# vim merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# cat merge.txt
+Fello CloudEthiX….
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git add merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git commit -m "Add different greeting in merge.txt on demo/conflicts branch"
+[demo/conflicts 6c96625] Add different greeting in merge.txt on demo/conflicts branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 merge.txt
+root@DESKTOP-8OOG2HF:merge_confilct_demo# git merge demo/merge
+Auto-merging merge.txt
+CONFLICT (add/add): Merge conflict in merge.txt
+Automatic merge failed; fix conflicts and then commit the result.
+root@DESKTOP-8OOG2HF:merge_confilct_demo# cat merge.txt
+<<<<<<< HEAD
+Fello CloudEthiX….
+=======
+Hello CloudEthiX….
+>>>>>>> demo/merge
+===========================================================================
+3. Create PR to merge the cloud_dev02 branch to Forked repository. Approve the PR and merge cloud_dev02 branch to master branch remotely.
+===========================================================================
+ANS}
+ PUBLIC_PROJECTPublic
+forked from ripienaar/free-for-dev
+==================================================================================================================================
+4. Fetch latest changes from master branch of remote forked repository to local master branch. Then merge forked remote master 
+   branch with local master branch. Check If all the latest files are there. Then checkout to local cloud_dev03 branch locally. 
+   Then Pull latest changes from the remote master branch.
+==================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# mkdir questions_04
+root@DESKTOP-8OOG2HF:~# cd questions_04/
+root@DESKTOP-8OOG2HF:questions_04# git init
+Initialized empty Git repository in /root/questions_04/.git/
+root@DESKTOP-8OOG2HF:questions_04# git remote add origin git@github.com:ASFIASHAIKH/PUBLIC_PROJECT.git
+root@DESKTOP-8OOG2HF:questions_04# git pull origin master
+remote: Enumerating objects: 13029, done.
+remote: Counting objects: 100% (85/85), done.
+remote: Compressing objects: 100% (54/54), done.
+remote: Total 13029 (delta 44), reused 63 (delta 31), pack-reused 12944
+Receiving objects: 100% (13029/13029), 7.08 MiB | 4.05 MiB/s, done.
+Resolving deltas: 100% (6763/6763), done.
+From github.com:ASFIASHAIKH/PUBLIC_PROJECT
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> origin/master
+root@DESKTOP-8OOG2HF:questions_04# git branch -l
+* master
+root@DESKTOP-8OOG2HF:questions_04# ls
+CNAME  README.md  cloudethix.txt  files1.txt  files2.txt  files3.txt  hello.txt  index.html  logo.webp  moto.txt  world.txt
+root@DESKTOP-8OOG2HF:questions_04# git checkout -b cloud_dev03
+Switched to a new branch 'cloud_dev03'
+root@DESKTOP-8OOG2HF:questions_04# touch deal.txt
+root@DESKTOP-8OOG2HF:questions_04# git status
+On branch cloud_dev03
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        deal.txt
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-8OOG2HF:questions_04# git add .
+root@DESKTOP-8OOG2HF:questions_04# git status
+On branch cloud_dev03
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   deal.txt
+root@DESKTOP-8OOG2HF:questions_04# ll
+total 292
+drwxr-xr-x  4 root root   4096 Jan  9 13:47 ./
+drwx------ 24 root root   4096 Jan  9 13:46 ../
+drwxr-xr-x  8 root root   4096 Jan  9 13:48 .git/
+drwxr-xr-x  2 root root   4096 Jan  9 13:45 .github/
+-rw-r--r--  1 root root     12 Jan  9 13:45 CNAME
+-rw-r--r--  1 root root 265115 Jan  9 13:45 README.md
+-rw-r--r--  1 root root      1 Jan  9 13:45 cloudethix.txt
+-rw-r--r--  1 root root      0 Jan  9 13:47 deal.txt
+-rw-r--r--  1 root root      0 Jan  9 13:45 files1.txt
+-rw-r--r--  1 root root      0 Jan  9 13:45 files2.txt
+-rw-r--r--  1 root root      0 Jan  9 13:45 files3.txt
+-rw-r--r--  1 root root      0 Jan  9 13:45 hello.txt
+-rw-r--r--  1 root root   3556 Jan  9 13:45 index.html
+-rw-r--r--  1 root root    768 Jan  9 13:45 logo.webp
+-rw-r--r--  1 root root      0 Jan  9 13:45 moto.txt
+-rw-r--r--  1 root root      0 Jan  9 13:45 world.txt
+root@DESKTOP-8OOG2HF:questions_04# git commit -m "adding a deal.txt file"
+[cloud_dev03 22990ff] adding a deal.txt file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 deal.txt
+root@DESKTOP-8OOG2HF:questions_04# git status
+On branch cloud_dev03
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:questions_04# git checkout master
+Switched to branch 'master'
+root@DESKTOP-8OOG2HF:questions_04# git merge cloud_dev03
+Updating 9637ed1..22990ff
+Fast-forward
+ deal.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 deal.txt
+root@DESKTOP-8OOG2HF:questions_04# git checkout cloud_dev03
+Switched to branch 'cloud_dev03'
+root@DESKTOP-8OOG2HF:questions_04# git pull origin master
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (2/2), 615 bytes | 615.00 KiB/s, done.
+From github.com:ASFIASHAIKH/PUBLIC_PROJECT
+ * branch            master     -> FETCH_HEAD
+   9637ed1..4474113  master     -> origin/master
+hint: You have divergent branches and need to specify how to reconcile them.
+hint: You can do so by running one of the following commands sometime before
+hint: your next pull:
+hint:
+hint:   git config pull.rebase false  # merge (the default strategy)
+hint:   git config pull.rebase true   # rebase
+hint:   git config pull.ff only       # fast-forward only
+hint:
+hint: You can replace "git config" with "git config --global" to set a default
+hint: preference for all repositories. You can also pass --rebase, --no-rebase,
+hint: or --ff-only on the command line to override the configured default per
+hint: invocation.
+fatal: Need to specify how to reconcile divergent branches.
+ 
+root@DESKTOP-8OOG2HF:questions_04# git pull --rebase origin master
+From github.com:ASFIASHAIKH/PUBLIC_PROJECT
+ * branch            master     -> FETCH_HEAD
+Successfully rebased and updated refs/heads/cloud_dev03.
+root@DESKTOP-8OOG2HF:questions_04# ls
+CNAME      cloudethix.txt  files1.txt  files3.txt  hello.txt   logo.webp  world.txt
+README.md  deal.txt        files2.txt  happy.txct  index.html  moto.txt
+===============================================================================================================
+5. Checkout to the cloud_dev01 branch locally and rebase the remote master branch of the forked repository.
+===============================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# mkdir question_05
+root@DESKTOP-8OOG2HF:~# cd question_05
+
+root@DESKTOP-8OOG2HF:question_05# git init
+Initialized empty Git repository in /root/question_05/.git/
+root@DESKTOP-8OOG2HF:question_05# ll
+total 12
+drwxr-xr-x  3 root root 4096 Jan  9 11:58 ./
+drwx------ 20 root root 4096 Jan  9 11:58 ../
+drwxr-xr-x  7 root root 4096 Jan  9 11:58 .git/
+
+root@DESKTOP-8OOG2HF:question_05# git clone git@github.com:ASFIASHAIKH/PUBLIC_PROJECT.git
+Cloning into 'PUBLIC_PROJECT'...
+remote: Enumerating objects: 13026, done.
+remote: Counting objects: 100% (83/83), done.
+remote: Compressing objects: 100% (54/54), done.
+remote: Total 13026 (delta 43), reused 61 (delta 29), pack-reused 12943
+Receiving objects: 100% (13026/13026), 7.08 MiB | 3.98 MiB/s, done.
+Resolving deltas: 100% (6762/6762), done.
+
+root@DESKTOP-8OOG2HF:question_05# ll
+total 16
+drwxr-xr-x  4 root root 4096 Jan  9 12:23 ./
+drwx------ 20 root root 4096 Jan  9 12:22 ../
+drwxr-xr-x  7 root root 4096 Jan  9 11:58 .git/
+drwxr-xr-x  4 root root 4096 Jan  9 12:23 PUBLIC_PROJECT/
+root@DESKTOP-8OOG2HF:question_05# cd PUBLIC_PROJECT/
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# ll
+total 288
+drwxr-xr-x 4 root root   4096 Jan  9 12:23 ./
+drwxr-xr-x 4 root root   4096 Jan  9 12:23 ../
+drwxr-xr-x 8 root root   4096 Jan  9 12:23 .git/
+drwxr-xr-x 2 root root   4096 Jan  9 12:23 .github/
+-rw-r--r-- 1 root root     12 Jan  9 12:23 CNAME
+-rw-r--r-- 1 root root 265115 Jan  9 12:23 README.md
+-rw-r--r-- 1 root root      0 Jan  9 12:23 files1.txt
+-rw-r--r-- 1 root root      0 Jan  9 12:23 files2.txt
+-rw-r--r-- 1 root root      0 Jan  9 12:23 files3.txt
+-rw-r--r-- 1 root root      0 Jan  9 12:23 hello.txt
+-rw-r--r-- 1 root root   3556 Jan  9 12:23 index.html
+-rw-r--r-- 1 root root    768 Jan  9 12:23 logo.webp
+-rw-r--r-- 1 root root      0 Jan  9 12:23 moto.txt
+-rw-r--r-- 1 root root      0 Jan  9 12:23 world.txt
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/cloud_dev02
+  remotes/origin/master
+  
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout -b cloud_dev01
+Switched to a new branch 'cloud_dev01'
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git branch -a
+* cloud_dev01
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/cloud_dev02
+  remotes/origin/master
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# touch cloudethix.txt
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git status
+On branch cloud_dev01
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        cloudethix.txt
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git add .
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git status
+On branch cloud_dev01
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   cloudethix.txt
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git commit -m "Adding a cloudethix.txt file"
+[cloud_dev01 ea6d72d] Adding a cloudethix.txt file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 cloudethix.txt
+ 
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git status
+On branch cloud_dev01
+nothing to commit, working tree clean
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT#  git rebase master
+Current branch cloud_dev01 is up to date.
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git merge cloud_dev01
+Updating 8abf44a..ea6d72d
+Fast-forward
+ cloudethix.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 cloudethix.txt
+
+root@DESKTOP-8OOG2HF:PUBLIC_PROJECT# git log
+commit ea6d72d79c715ca4250a539a4cf174c9271d215a (HEAD -> master, cloud_dev01)
+Author: Asfia <shaikhasfiya12345@gmail.com>
+Date:   Tue Jan 9 12:25:15 2024 +0530
+    Adding a cloudethix.txt file
+====================================================================================================================================
+6. Create one repository locally. Commit any 3 files to the local repository. And the revert back the commits.
+====================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# cd
+root@DESKTOP-8OOG2HF:~# mkdir question_06
+root@DESKTOP-8OOG2HF:~# cd question_06
+root@DESKTOP-8OOG2HF:question_06# mkdir data-analysis-tools
+root@DESKTOP-8OOG2HF:question_06# cd data-analysis-tools/
+root@DESKTOP-8OOG2HF:data-analysis-tools# git init
+Initialized empty Git repository in /root/question_06/data-analysis-tools/.git/
+root@DESKTOP-8OOG2HF:data-analysis-tools# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 12:34 ./
+drwxr-xr-x 3 root root 4096 Jan  9 12:34 ../
+drwxr-xr-x 7 root root 4096 Jan  9 12:34 .git/
+root@DESKTOP-8OOG2HF:data-analysis-tools# touch config{1..3}.txt
+root@DESKTOP-8OOG2HF:data-analysis-tools# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 12:35 ./
+drwxr-xr-x 3 root root 4096 Jan  9 12:34 ../
+drwxr-xr-x 7 root root 4096 Jan  9 12:34 .git/
+-rw-r--r-- 1 root root    0 Jan  9 12:35 config1.txt
+-rw-r--r-- 1 root root    0 Jan  9 12:35 config2.txt
+-rw-r--r-- 1 root root    0 Jan  9 12:35 config3.txt
+root@DESKTOP-8OOG2HF:data-analysis-tools# git status
+On branch master
+No commits yet
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        config1.txt
+        config2.txt
+        config3.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-8OOG2HF:data-analysis-tools# git add .
+root@DESKTOP-8OOG2HF:data-analysis-tools# git status
+On branch master
+No commits yet
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   config1.txt
+        new file:   config2.txt
+        new file:   config3.txt
+
+root@DESKTOP-8OOG2HF:data-analysis-tools# git commit -m "Initial commit with 3 files"
+[master (root-commit) f357687] Initial commit with 3 files
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 config1.txt
+ create mode 100644 config2.txt
+ create mode 100644 config3.txt
+root@DESKTOP-8OOG2HF:data-analysis-tools# git status
+On branch master
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:data-analysis-tools# git log
+commit f357687431b051330bf3b6b825691e6e00644ed4 (HEAD -> master)
+Author: Asfia <shaikhasfiya12345@gmail.com>
+Date:   Tue Jan 9 12:36:13 2024 +0530
+
+    Initial commit with 3 files
+root@DESKTOP-8OOG2HF:data-analysis-tools# git log --oneline
+f357687 (HEAD -> master) Initial commit with 3 files
+root@DESKTOP-8OOG2HF:data-analysis-tools# git revert f357687
+[master 9571cfc] Revert "Initial commit with 3 files"
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 config1.txt
+ delete mode 100644 config2.txt
+ delete mode 100644 config3.txt
+root@DESKTOP-8OOG2HF:data-analysis-tools# git log
+commit 9571cfc469e85b5df723a5b4f8712287565d2115 (HEAD -> master)
+Author: Asfia <shaikhasfiya12345@gmail.com>
+Date:   Tue Jan 9 12:39:15 2024 +0530
+    Revert "Initial commit with 3 files
+    This reverts commit f357687431b051330bf3b6b825691e6e00644ed4.
+commit f357687431b051330bf3b6b825691e6e00644ed4
+Author: Asfia <shaikhasfiya12345@gmail.com>
+Date:   Tue Jan 9 12:36:13 2024 +0530
+    Initial commit with 3 files
+root@DESKTOP-8OOG2HF:data-analysis-tools# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 12:39 ./
+drwxr-xr-x 3 root root 4096 Jan  9 12:34 ../
+drwxr-xr-x 8 root root 4096 Jan  9 12:39 .git/
+====================================================================================================================================
+7. Create one local repository. commit some files to the local master branch. Checkout to master_02 branch. Create 2 more files. 
+   Add those to the staging area. Create stash area and those files. Then list and delete the stash.
+====================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:question_07# mkdir platform
+root@DESKTOP-8OOG2HF:question_07# cd platform/
+root@DESKTOP-8OOG2HF:platform# git init
+Initialized empty Git repository in /root/question_07/platform/.git/
+root@DESKTOP-8OOG2HF:platform# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 13:01 ./
+drwxr-xr-x 3 root root 4096 Jan  9 13:00 ../
+drwxr-xr-x 7 root root 4096 Jan  9 13:01 .git/
+root@DESKTOP-8OOG2HF:platform# touch file_01.txt file_02.txt
+root@DESKTOP-8OOG2HF:platform# git branch -a
+root@DESKTOP-8OOG2HF:platform# git add .
+root@DESKTOP-8OOG2HF:platform# git status
+On branch master
+No commits yet
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   file_01.txt
+        new file:   file_02.txt
+root@DESKTOP-8OOG2HF:platform# git commit -m "Initial commit on master branch"
+[master (root-commit) fcd1726] Initial commit on master branch
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file_01.txt
+ create mode 100644 file_02.txt
+root@DESKTOP-8OOG2HF:platform# git status
+On branch master
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:platform# git branch -a
+* master
+root@DESKTOP-8OOG2HF:platform# git checkout -b master_02
+Switched to a new branch 'master_02'
+root@DESKTOP-8OOG2HF:platform# git branch -a
+  master
+* master_02
+root@DESKTOP-8OOG2HF:platform# touch file_03.txt file_04.txt
+root@DESKTOP-8OOG2HF:platform# git status
+On branch master_02
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        file_03.txt
+        file_04.txt
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-8OOG2HF:platform# git add file_03.txt file_04.txt
+root@DESKTOP-8OOG2HF:platform# git status
+On branch master_02
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   file_03.txt
+        new file:   file_04.txt
+
+root@DESKTOP-8OOG2HF:platform# git stash save "Stashing changes on master_02 branch"
+Saved working directory and index state On master_02: Stashing changes on master_02 branch
+root@DESKTOP-8OOG2HF:platform# git stash list
+stash@{0}: On master_02: Stashing changes on master_02 branch
+root@DESKTOP-8OOG2HF:platform# git stash drop
+Dropped refs/stash@{0} (5fbc3e3cbdcfebd7db3a6a2498e8a3e14f17e930)
+root@DESKTOP-8OOG2HF:platform# git stash list
+===================================================================================================================================
+8. Create a local repository, initialise it and create 3 branches: develop, hotfix and release. Checkout to hotfix branch and 
+   commit cloudethix.txt and once committed amend the commit message
+===================================================================================================================================
+ANS}
+root@DESKTOP-8OOG2HF:~# cd question_08
+root@DESKTOP-8OOG2HF:question_08# mkdir utils-library
+root@DESKTOP-8OOG2HF:question_08# cd utils-library/
+root@DESKTOP-8OOG2HF:utils-library# git init
+Initialized empty Git repository in /root/question_08/utils-library/.git/
+root@DESKTOP-8OOG2HF:utils-library# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 13:11 ./
+drwxr-xr-x 3 root root 4096 Jan  9 13:10 ../
+drwxr-xr-x 7 root root 4096 Jan  9 13:11 .git/
+root@DESKTOP-8OOG2HF:utils-library# touch file
+root@DESKTOP-8OOG2HF:utils-library# git add .
+root@DESKTOP-8OOG2HF:utils-library# git commit "add temporary file"
+error: pathspec 'add temporary file' did not match any file(s) known to git
+root@DESKTOP-8OOG2HF:utils-library# git commit -m "add temporary file"
+[master (root-commit) e82017e] add temporary file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file
+root@DESKTOP-8OOG2HF:utils-library# git status
+On branch master
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:utils-library# git branch -a
+* master
+root@DESKTOP-8OOG2HF:utils-library# git checkout -b develop
+Switched to a new branch 'develop'
+root@DESKTOP-8OOG2HF:utils-library# git checkout master
+Switched to branch 'master'
+root@DESKTOP-8OOG2HF:utils-library# git checkout -b hotfix
+Switched to a new branch 'hotfix'
+root@DESKTOP-8OOG2HF:utils-library# git checkout master
+Switched to branch 'master'
+root@DESKTOP-8OOG2HF:utils-library# git checkout -b release
+Switched to a new branch 'release'
+root@DESKTOP-8OOG2HF:utils-library# git checkout master
+Switched to branch 'master'
+root@DESKTOP-8OOG2HF:utils-library# git checkout  hotfix
+Switched to branch 'hotfix'
+root@DESKTOP-8OOG2HF:utils-library# ll
+total 12
+drwxr-xr-x 3 root root 4096 Jan  9 13:12 ./
+drwxr-xr-x 3 root root 4096 Jan  9 13:12 ../
+drwxr-xr-x 8 root root 4096 Jan  9 13:14 .git/
+-rw-r--r-- 1 root root    0 Jan  9 13:12 file
+root@DESKTOP-8OOG2HF:utils-library# touch cloudethix.txt
+root@DESKTOP-8OOG2HF:utils-library# git status
+On branch hotfix
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        cloudethix.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+root@DESKTOP-8OOG2HF:utils-library# git add .
+root@DESKTOP-8OOG2HF:utils-library# git status
+On branch hotfix
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   cloudethix.txt
+
+root@DESKTOP-8OOG2HF:utils-library# git commit -m "Added cloudethix.txt file"
+[hotfix fe9af9b] Added cloudethix.txt file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 cloudethix.txt
+root@DESKTOP-8OOG2HF:utils-library# git status
+On branch hotfix
+nothing to commit, working tree clean
+root@DESKTOP-8OOG2HF:utils-library# git log --oneline
+fe9af9b (HEAD -> hotfix) Added cloudethix.txt file
+e82017e (release, master, develop) add temporary file
+root@DESKTOP-8OOG2HF:utils-library# git commit --amend -m "Adding cloudethix.txt file to
+enable login settings."
+[hotfix 2e8f95c] Adding cloudethix.txt file to enable login settings.
+ Date: Tue Jan 9 13:15:20 2024 +0530
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 cloudethix.txt
